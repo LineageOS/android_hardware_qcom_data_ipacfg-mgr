@@ -717,9 +717,9 @@ static int ipa_nl_decode_nlmsg
                                          ---------------------------------------------------------------------------*/
                                         evt_data.event = IPA_USB_LINK_UP_EVENT;
 					evt_data.evt_data = data_fid;
-					IPACM_EvtDispatcher::PostEvt(&evt_data);
 					IPACMDBG_H("Posting usb IPA_LINK_UP_EVENT with if index: %d\n",
 										 data_fid->if_index);
+					IPACM_EvtDispatcher::PostEvt(&evt_data);
                                 }
                                 else if(!(msg_ptr->nl_link_info.metainfo.ifi_flags & IFF_LOWER_UP))
                                 {
@@ -744,9 +744,9 @@ static int ipa_nl_decode_nlmsg
 					---------------------------------------------------------------------------*/
 					evt_data.event = IPA_LINK_DOWN_EVENT;
 					evt_data.evt_data = data_fid;
-					IPACM_EvtDispatcher::PostEvt(&evt_data);
 					IPACMDBG_H("Posting usb IPA_LINK_DOWN_EVENT with if index: %d\n",
 										 data_fid->if_index);
+					IPACM_EvtDispatcher::PostEvt(&evt_data);
                                 }
 			}
 			break;
