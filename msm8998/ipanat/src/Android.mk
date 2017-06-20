@@ -15,7 +15,7 @@ LOCAL_SRC_FILES := ipa_nat_drv.c \
                    ipa_nat_drvi.c
 
 
-LOCAL_MODULE_PATH_64 := $(TARGET_OUT_VENDOR)/lib64
+LOCAL_VENDOR_MODULE := true
 LOCAL_CFLAGS := -DDEBUG
 LOCAL_MODULE := libipanat
 LOCAL_MODULE_TAGS := optional
