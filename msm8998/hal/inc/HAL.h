@@ -168,8 +168,7 @@ private:
     } boolResult_t;
 
     HAL(IOffloadManager* /* mgr */);
-    void registerAsSystemService(const char* /* name */);
-
+    void registerAsSystemService();
     void doLogcatDump();
 
     static BoolResult makeInputCheckFailure(string /* customErr */);
