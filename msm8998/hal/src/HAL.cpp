@@ -70,7 +70,7 @@ HAL* HAL::makeIPAHAL(int version, IOffloadManager* mgr) {
     HAL* ret = new HAL(mgr);
     if (nullptr == ret) return NULL;
     configureRpcThreadpool(1, false);
-    ret->registerAsSystemService("ipacm");
+    ret->registerAsSystemService();
     return ret;
 } /* makeIPAHAL */
 
@@ -83,19 +83,19 @@ HAL::HAL(IOffloadManager* mgr) : mLogs("HAL Function Calls", 50) {
     mCbCt = nullptr;
 } /* HAL */
 
-void HAL::registerAsSystemService(const char* name) {
+void HAL::registerAsSystemService() {
     status_t ret = 0;
 
-    ret = IOffloadControl::registerAsService(name);
+    ret = IOffloadControl::registerAsService();
     if (ret != 0) ALOGE("Failed to register IOffloadControl (%d)", ret);
     else if (DBG) {
-        ALOGI("Successfully registered IOffloadControl (%s)", name);
+        ALOGI("Successfully registered IOffloadControl");
     }
 
-    IOffloadConfig::registerAsService(name);
+    IOffloadConfig::registerAsService();
     if (ret != 0) ALOGE("Failed to register IOffloadConfig (%d)", ret);
     else if (DBG) {
-        ALOGI("Successfully registered IOffloadConfig (%s)", name);
+        ALOGI("Successfully registered IOffloadConfig");
     }
 } /* registerAsSystemService */
 
