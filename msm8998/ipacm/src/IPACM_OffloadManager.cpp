@@ -226,8 +226,8 @@ RET IPACM_OffloadManager::removeDownstream(const char * downstream_name, const P
 	IPACMDBG_H("removeDownstream name(%s), ip-family(%d) \n", downstream_name, prefix.fam);
 	if(ipa_get_if_index(downstream_name, &index))
 	{
-		IPACMERR("fail to get iface index.\n");
-		return FAIL_HARDWARE;
+		IPACMERR("netdev(%s) already removed, ignored\n", downstream_name);
+		return SUCCESS;
 	}
 
 	evt_data = (ipacm_event_ipahal_stream*)malloc(sizeof(ipacm_event_ipahal_stream));
