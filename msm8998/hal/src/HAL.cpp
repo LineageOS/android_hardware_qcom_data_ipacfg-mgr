@@ -77,7 +77,7 @@ HAL* HAL::makeIPAHAL(int version, IOffloadManager* mgr) {
 
 
 /* ------------------------------ PRIVATE ----------------------------------- */
-HAL::HAL(IOffloadManager* mgr) : mLogs("HAL Function Calls", 50) {
+HAL::HAL(IOffloadManager* mgr) : mLogs("HAL Function Calls", 100) {
     mIPA = mgr;
     mCb.clear();
     mCbIpa = nullptr;
@@ -594,3 +594,12 @@ Return<void> HAL::removeDownstream
     mLogs.addLog(fl);
     return Void();
 } /* removeDownstream */
+
+Return<void> HAL::debug
+(
+    const hidl_handle& fd,
+    const hidl_vec<hidl_string>& /* options */
+) {
+    mLogs.toFd(fd->data[0]);
+    return Void();
+} /* debug */
