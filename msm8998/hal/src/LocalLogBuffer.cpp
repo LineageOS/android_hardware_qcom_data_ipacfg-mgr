@@ -33,6 +33,7 @@
 #include <deque>
 #include <string>
 #include <sys/types.h>
+#include <unistd.h>
 #include <vector>
 
 /* Internal Includes */
@@ -124,3 +125,11 @@ void LocalLogBuffer::toLogcat() {
     for (size_t i = 0; i < mLogs.size(); i++)
         ALOGD("%s: %s", mName.c_str(), mLogs[i].toString().c_str());
 } /* toLogcat */
+
+void LocalLogBuffer::toFd(int fd) {
+    for (size_t i = 0; i < mLogs.size(); i++) {
+        string line = mName + " " + mLogs[i].toString();
+        write(fd, line.c_str(), line.size());
+        write(fd, "\n", 1);
+    }
+} /* toFd */
