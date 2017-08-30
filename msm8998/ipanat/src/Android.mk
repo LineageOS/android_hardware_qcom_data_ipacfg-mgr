@@ -16,7 +16,7 @@ LOCAL_SRC_FILES := ipa_nat_drv.c \
 
 
 LOCAL_VENDOR_MODULE := true
-LOCAL_CFLAGS := -DDEBUG
+LOCAL_CFLAGS := -DDEBUG -Wall -Werror
 LOCAL_MODULE := libipanat
 LOCAL_MODULE_TAGS := optional
 LOCAL_PRELINK_MODULE := false
