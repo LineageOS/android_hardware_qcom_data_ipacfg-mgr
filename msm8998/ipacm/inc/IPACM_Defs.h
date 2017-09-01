@@ -166,6 +166,8 @@ typedef enum
 	IPA_WAN_XLAT_CONNECT_EVENT,               /* ipacm_event_data_fid */
 	IPA_TETHERING_STATS_UPDATE_EVENT,         /* ipacm_event_data_fid */
 	IPA_NETWORK_STATS_UPDATE_EVENT,           /* ipacm_event_data_fid */
+	IPA_DOWNSTREAM_ADD,                       /* ipacm_event_ipahal_stream */
+	IPA_DOWNSTREAM_DEL,                       /* ipacm_event_ipahal_stream */
 
 	IPA_EXTERNAL_EVENT_MAX,
 
@@ -185,8 +187,6 @@ typedef enum
 	IPA_ETH_BRIDGE_CLIENT_DEL,                /* ipacm_event_eth_bridge*/
 	IPA_ETH_BRIDGE_WLAN_SCC_MCC_SWITCH,       /* ipacm_event_eth_bridge*/
 	IPA_LAN_DELETE_SELF,                      /* ipacm_event_data_fid */
-	IPA_DOWNSTREAM_ADD,                       /* ipacm_event_ipahal_stream */
-	IPA_DOWNSTREAM_DEL,                       /* ipacm_event_ipahal_stream */
 	IPACM_EVENT_MAX
 } ipa_cm_event_id;
 
