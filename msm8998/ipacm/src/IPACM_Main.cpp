@@ -696,7 +696,7 @@ void* ipa_driver_msg_notifier(void *param)
 			} else {
 				OffloadMng->elrInstance->onLimitReached();
 			}
-			break;
+			continue;
 		case IPA_SSR_BEFORE_SHUTDOWN:
 			IPACMDBG_H("Received IPA_SSR_BEFORE_SHUTDOWN\n");
 			OffloadMng = IPACM_OffloadManager::GetInstance();
@@ -705,7 +705,7 @@ void* ipa_driver_msg_notifier(void *param)
 			} else {
 				OffloadMng->elrInstance->onOffloadStopped(IpaEventRelay::ERROR);
 			}
-			break;
+			continue;
 		case IPA_SSR_AFTER_POWERUP:
 			IPACMDBG_H("Received IPA_SSR_AFTER_POWERUP\n");
 			OffloadMng = IPACM_OffloadManager::GetInstance();
@@ -714,7 +714,7 @@ void* ipa_driver_msg_notifier(void *param)
 			} else {
 				OffloadMng->elrInstance->onOffloadSupportAvailable();
 			}
-			break;
+			continue;
 #endif
 		default:
 			IPACMDBG_H("Unhandled message type: %d\n", event_hdr.msg_type);
