@@ -564,6 +564,7 @@ RET IPACM_OffloadManager::getStats(const char * upstream_name /* upstream */,
 	offload_stats.rx = stats.rx_bytes;
 
 	IPACMDBG_H("send getStats tx:%lu rx:%lu \n", offload_stats.tx, offload_stats.rx);
+	close(fd);
 	return SUCCESS;
 }
 
@@ -664,6 +665,7 @@ int IPACM_OffloadManager::resetTetherStats(const char * upstream_name /* upstrea
 		return FAIL_HARDWARE;
 	}
 	IPACMDBG_H("Reset Interface %s stats\n", upstream_name);
+	close(fd);
 	return IPACM_SUCCESS;
 }
 
