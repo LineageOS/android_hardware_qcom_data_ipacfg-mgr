@@ -105,10 +105,12 @@ public:
 	{
 #ifdef FEATURE_IPA_ANDROID
 #ifdef FEATURE_IPACM_HAL
+		/*To avoid -Wall -Werror error */
+		IPACMDBG_H("ipa_if_num_tether: %d\n",ipa_if_num_tether);
 		return wan_up;
 #else
 
-		int i;
+		uint32_t i;
 		for (i=0; i < ipa_if_num_tether_v4_total;i++)
 		{
 			if (ipa_if_num_tether_v4[i] == ipa_if_num_tether)
@@ -129,7 +131,12 @@ public:
 	static bool isWanUP_V6(int ipa_if_num_tether)
 	{
 #ifdef FEATURE_IPA_ANDROID
-		int i;
+#ifdef FEATURE_IPACM_HAL
+		/*To avoid -Wall -Werror error */
+		IPACMDBG_H("ipa_if_num_tether: %d\n",ipa_if_num_tether);
+		return wan_up_v6;
+#else
+		uint32_t i;
 		for (i=0; i < ipa_if_num_tether_v6_total;i++)
 		{
 			if (ipa_if_num_tether_v6[i] == ipa_if_num_tether)
@@ -141,6 +148,7 @@ public:
 			}
 		}
 		return false;
+#endif
 #else
 		return wan_up_v6;
 #endif
@@ -179,9 +187,9 @@ public:
 	}
 #ifdef FEATURE_IPA_ANDROID
 	/* IPACM interface id */
-	static int ipa_if_num_tether_v4_total;
+	static uint32_t ipa_if_num_tether_v4_total;
 	static int ipa_if_num_tether_v4[IPA_MAX_IFACE_ENTRIES];
-	static int ipa_if_num_tether_v6_total;
+	static uint32_t ipa_if_num_tether_v6_total;
 	static int ipa_if_num_tether_v6[IPA_MAX_IFACE_ENTRIES];
 #endif
 
@@ -235,7 +243,7 @@ private:
 	int wan_client_len;
 	ipa_wan_client *wan_client;
 	int header_name_count;
-	int num_wan_client;
+	uint32_t num_wan_client;
 	uint8_t invalid_mac[IPA_MAC_ADDR_SIZE];
 	bool is_xlat;
 
