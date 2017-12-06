@@ -65,6 +65,7 @@ public:
     LocalLogBuffer(string /* name */, int /* maxLogs */);
     void addLog(FunctionLog /* log */);
     void toLogcat();
+    void toFd(int fd);
 private:
     deque<FunctionLog> mLogs;
     const string mName;

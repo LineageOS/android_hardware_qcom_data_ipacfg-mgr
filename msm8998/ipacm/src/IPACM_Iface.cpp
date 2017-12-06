@@ -237,8 +237,6 @@ fail:
 int IPACM_Iface::handle_software_routing_disable(void)
 {
 	int res = IPACM_SUCCESS;
-	ipa_ip_type ip;
-	uint32_t flt_hdl;
 
 	if (rx_prop == NULL)
 	{
@@ -853,7 +851,11 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 
 		if(rx_prop->rx[0].attrib.attrib_mask & IPA_FLT_META_DATA)
 		{
+#ifdef FEATURE_IPA_V3
+			flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<9);
+#else
 			flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<14);
+#endif
 			flt_rule_entry.rule.eq_attrib.metadata_meq32_present = 1;
 			flt_rule_entry.rule.eq_attrib.metadata_meq32.offset = 0;
 			flt_rule_entry.rule.eq_attrib.metadata_meq32.value = rx_prop->rx[0].attrib.meta_data;
@@ -864,7 +866,11 @@ int IPACM_Iface::init_fl_rule(ipa_ip_type iptype)
 		flt_rule_entry.rule.eq_attrib.protocol_eq_present = 1;
 		flt_rule_entry.rule.eq_attrib.protocol_eq = IPACM_FIREWALL_IPPROTO_TCP;
 
+#ifdef FEATURE_IPA_V3
+		flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<7);
+#else
 		flt_rule_entry.rule.eq_attrib.rule_eq_bitmap |= (1<<8);
+#endif
 		flt_rule_entry.rule.eq_attrib.num_ihl_offset_meq_32 = 1;
 		flt_rule_entry.rule.eq_attrib.ihl_offset_meq_32[0].offset = 12;
 
@@ -924,30 +930,37 @@ int IPACM_Iface::ipa_get_if_index
   int * if_index
 )
 {
-  int fd;
-  struct ifreq ifr;
+	int fd;
+	struct ifreq ifr;
 
-  if((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
-  {
-    IPACMERR("get interface index socket create failed \n");
-    return IPACM_FAILURE;
-  }
+	if((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+	{
+		IPACMERR("get interface index socket create failed \n");
+		return IPACM_FAILURE;
+	}
 
-  memset(&ifr, 0, sizeof(struct ifreq));
-  (void)strncpy(ifr.ifr_name, if_name, sizeof(ifr.ifr_name));
-  IPACMDBG_H("interface name (%s)\n", if_name);
+	if(strlen(if_name) >= sizeof(ifr.ifr_name))
+	{
+		IPACMERR("interface name overflows: len %zu\n", strlen(if_name));
+		close(fd);
+		return IPACM_FAILURE;
+	}
 
-  if (ioctl(fd,SIOCGIFINDEX , &ifr) < 0)
-  {
-    IPACMERR("call_ioctl_on_dev: ioctl failed, interface name (%s):\n", ifr.ifr_name);
-    close(fd);
-    return IPACM_FAILURE;
-  }
+	memset(&ifr, 0, sizeof(struct ifreq));
+	(void)strlcpy(ifr.ifr_name, if_name, sizeof(ifr.ifr_name));
+	IPACMDBG_H("interface name (%s)\n", if_name);
 
-  *if_index = ifr.ifr_ifindex;
-  IPACMDBG_H("Interface index %d\n", *if_index);
-  close(fd);
-  return IPACM_SUCCESS;
+	if(ioctl(fd,SIOCGIFINDEX , &ifr) < 0)
+	{
+		IPACMERR("call_ioctl_on_dev: ioctl failed, interface name (%s):\n", ifr.ifr_name);
+		close(fd);
+		return IPACM_FAILURE;
+	}
+
+	*if_index = ifr.ifr_ifindex;
+	IPACMDBG_H("Interface index %d\n", *if_index);
+	close(fd);
+	return IPACM_SUCCESS;
 }
 
 void IPACM_Iface::config_ip_type(ipa_ip_type iptype)

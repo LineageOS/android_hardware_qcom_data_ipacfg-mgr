@@ -161,6 +161,9 @@ public:
             const hidl_string& /* prefix */,
             removeDownstream_cb /* hidl_cb */);
 
+    /* Common */
+    Return<void> debug(const hidl_handle& /* fd */, const hidl_vec<hidl_string>& /* options */);
+
 private:
     typedef struct BoolResult {
         bool success;
