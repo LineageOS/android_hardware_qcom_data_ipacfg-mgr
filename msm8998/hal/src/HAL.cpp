@@ -611,9 +611,11 @@ Return<void> HAL::removeDownstream
 
 Return<void> HAL::debug
 (
-    const hidl_handle& fd,
+    const hidl_handle& handle,
     const hidl_vec<hidl_string>& /* options */
 ) {
-    mLogs.toFd(fd->data[0]);
+    if (handle != nullptr && handle->numFds >= 1) {
+        mLogs.toFd(handle->data[0]);
+    }
     return Void();
 } /* debug */
