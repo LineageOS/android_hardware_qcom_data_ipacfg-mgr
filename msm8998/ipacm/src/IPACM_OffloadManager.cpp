@@ -349,7 +349,15 @@ RET IPACM_OffloadManager::setUpstream(const char *upstream_name, const Prefix& g
 	if(upstream_name == NULL)
 	{
 		if (default_gw_index == INVALID_IFACE) {
-			IPACMERR("no previous upstream set before\n");
+			for (index = 0; index < MAX_EVENT_CACHE; index++) {
+  				if (event_cache[index].valid == true &&
+      			            event_cache[index].event == IPA_WAN_UPSTREAM_ROUTE_ADD_EVENT) {
+    					event_cache[index].valid = false;
+    					memset(event_cache, 0, MAX_EVENT_CACHE*sizeof(framework_event_cache));
+    					return SUCCESS;
+  				}
+			}
+                        IPACMERR("no previous upstream set before\n");
 			return FAIL_INPUT_CHECK;
 		}
 		if (gw_addr_v4.fam == V4 && upstream_v4_up == true) {
