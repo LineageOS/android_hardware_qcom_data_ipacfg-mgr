@@ -14,6 +14,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_SRC_FILES := ipa_nat_drv.c \
                    ipa_nat_drvi.c
 
+LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 
 LOCAL_VENDOR_MODULE := true
 LOCAL_CFLAGS := -DDEBUG -Wall -Werror
