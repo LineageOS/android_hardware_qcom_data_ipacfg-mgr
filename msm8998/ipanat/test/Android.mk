@@ -15,6 +15,7 @@ LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 LOCAL_MODULE := ipa_nat_test
 LOCAL_LICENSE_KINDS := SPDX-license-identifier-BSD
 LOCAL_LICENSE_CONDITIONS := notice
+LOCAL_NOTICE_FILE := $(LOCAL_PATH)/../../LICENSE
 LOCAL_SRC_FILES := ipa_nat_test000.c \
 		ipa_nat_test001.c \
 		ipa_nat_test002.c \
