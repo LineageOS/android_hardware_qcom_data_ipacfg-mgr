@@ -1,7 +1,7 @@
 BOARD_PLATFORM_LIST := test
 BOARD_IPAv3_LIST := msm8998
 BOARD_IPAv3_LIST += sdm845
-ifneq ($(call is-board-platform-in-list,$(BOARD_PLATFORM_LIST)),true)
+ifeq (,$(call is-board-platform-in-list2,$(BOARD_PLATFORM_LIST)))
 ifneq (,$(filter $(QCOM_BOARD_PLATFORMS),$(TARGET_BOARD_PLATFORM)))
 ifneq (, $(filter aarch64 arm arm64, $(TARGET_ARCH)))
 
@@ -34,7 +34,7 @@ ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
 LOCAL_CFLAGS += -DDEBUG
 endif
 
-ifeq ($(call is-board-platform-in-list,$(BOARD_IPAv3_LIST)),true)
+ifneq (,$(call is-board-platform-in-list2,$(BOARD_IPAv3_LIST)))
 LOCAL_CFLAGS += -DFEATURE_IPA_V3
 endif
 
