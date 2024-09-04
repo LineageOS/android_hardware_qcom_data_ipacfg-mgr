@@ -77,7 +77,7 @@ struct peer_iface_info
 	class IPACM_LanToLan_Iface *peer;
 	char rt_tbl_name_for_rt[IPA_IP_MAX][IPA_RESOURCE_NAME_MAX];
 	char rt_tbl_name_for_flt[IPA_IP_MAX][IPA_RESOURCE_NAME_MAX];
-	list<flt_rule_info> flt_rule;
+	std::list<flt_rule_info> flt_rule;
 };
 
 class IPACM_LanToLan_Iface
@@ -132,8 +132,8 @@ private:
 	uint32_t hdr_proc_ctx_for_inter_interface[IPA_HDR_L2_MAX];
 	uint32_t hdr_proc_ctx_for_intra_interface;
 
-	list<client_info> m_client_info;	/* client list */
-	list<peer_iface_info> m_peer_iface_info;	/* peer information list */
+	std::list<client_info> m_client_info;	/* client list */
+	std::list<peer_iface_info> m_peer_iface_info;	/* peer information list */
 
 	/* The following members are for intra-interface communication*/
 	peer_iface_info m_intra_interface_info;
@@ -173,9 +173,9 @@ private:
 
 	~IPACM_LanToLan();
 
-	list<class IPACM_LanToLan_Iface> m_iface;
+	std::list<class IPACM_LanToLan_Iface> m_iface;
 
-	list<ipacm_event_eth_bridge> m_cached_client_add_event;
+	std::list<ipacm_event_eth_bridge> m_cached_client_add_event;
 
 	void handle_iface_up(ipacm_event_eth_bridge *data);
 
